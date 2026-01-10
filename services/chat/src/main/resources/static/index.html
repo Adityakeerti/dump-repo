@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Ecosystem Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <h2>CampusChat</h2>
+                <div id="status-indicator"></div>
+                <span id="current-username">Connecting...</span>
+                <button onclick="logout()" class="glass-btn small"
+                    style="margin-top: 10px; font-size: 11px; padding: 5px 10px;">Logout</button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab(event, 'groups')">Groups</button>
+                <button class="tab-btn" onclick="switchTab(event, 'friends')">Friends</button>
+                <button class="tab-btn" onclick="switchTab(event, 'users')">Classmates</button>
+            </div>
+
+            <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                <button id="create-group-btn" class="glass-btn small" onclick="openGroupModal()" style="width: 100%;">+
+                    Create Group</button>
+            </div>
+
+            <div class="list-container" id="groups-list">
+                <!-- Group items injected here -->
+            </div>
+            <div class="list-container hidden" id="friends-list">
+                <div id="pending-requests"
+                    style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px;"
+                    class="hidden">
+                    <h4 style="font-size: 12px; color: #aaa; margin-bottom: 5px;">REQUESTS</h4>
+                    <div id="requests-list"></div>
+                </div>
+                <!-- Friend items injected here -->
+            </div>
+            <div class="list-container hidden" id="users-list">
+                <!-- User items injected here -->
+            </div>
+        </aside>
+
+        <!-- Chat Area -->
+        <main class="chat-area glass-panel">
+            <header class="chat-header">
+                <h3 id="chat-title">Select a conversation</h3>
+                <span id="chat-desc">...</span>
+            </header>
+
+            <div class="messages-container" id="messages-area">
+                <!-- Messages injected here -->
+                <div class="placeholder-msg">Join a chat to start messaging</div>
+            </div>
+
+            <footer class="chat-input-area">
+                <label for="message-input" class="visually-hidden">Message</label>
+                <input type="text" id="message-input" placeholder="Type a message..." disabled>
+                <button id="send-btn" onclick="sendMessage()" disabled>Send</button>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="glass-overlay">
+        <div class="login-box glass-panel">
+            <h2>Welcome Back</h2>
+            <p>Enter your credentials to join.</p>
+
+            <label for="email-input" class="visually-hidden">Email</label>
+            <input type="email" id="email-input" placeholder="Email (e.g. aditya@gmail.com)">
+
+            <label for="password-input" class="visually-hidden">Password</label>
+            <input type="password" id="password-input" placeholder="Password">
+
+            <button onclick="login()">Enter</button>
+        </div>
+    </div>
+
+    <!-- Friend Request Modal -->
+    <div id="friend-modal" class="glass-overlay hidden">
+        <div class="login-box glass-panel">
+            <h2>Add Friend</h2>
+            <p>Enter username to send request.</p>
+            <input type="text" id="friend-username-input" placeholder="Username">
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button onclick="sendFriendRequest()">Send</button>
+                <button onclick="closeFriendModal()" style="background: #555;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Group Modal -->
+    <div id="group-modal" class="glass-overlay hidden">
+        <div class="login-box glass-panel">
+            <h2>Create Group</h2>
+            <p>Create a new group chat.</p>
+            <input type="text" id="group-name-input" placeholder="Group Name">
+            <input type="text" id="group-desc-input" placeholder="Description (optional)">
+
+            <div style="text-align: left; margin-top: 10px; margin-bottom: 5px; font-size: 12px; color: #ccc;">Select
+                Members:</div>
+            <div id="friend-selection-list"
+                style="max-height: 150px; overflow-y: auto; text-align: left; background: rgba(0,0,0,0.2); padding: 5px; border-radius: 5px; margin-bottom: 10px;">
+                <!-- Friend checkboxes injected here -->
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button onclick="createGroup()">Create</button>
+                <button onclick="closeGroupModal()" style="background: #555;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
+<style>
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+</style>

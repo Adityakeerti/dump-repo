@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Controlled Virtual Whiteboard</title>
+    <meta name="description" content="Interactive gesture-controlled whiteboard with hand tracking and voice commands">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Environment Setup -->
+    <script src="./env.js"></script>
+
+    <!-- Import Maps for ES Modules -->
+    <script type="importmap">
+        {
+            "imports": {
+                "@mediapipe/tasks-vision": "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/vision_bundle.mjs"
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>Initializing AI Vision</h2>
+            <p id="loading-status">Please allow camera access...</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div id="container">
+        <!-- Hidden Video Element -->
+        <video id="webcam" autoplay playsinline></video>
+
+        <!-- Main Output Canvas -->
+        <canvas id="output_canvas"></canvas>
+
+        <!-- UI Overlay Layer -->
+        <div id="ui-layer">
+
+            <!-- Left Panel - Drawing Tools -->
+            <div class="panel panel-left" id="drawing-panel">
+                <h3 class="panel-title">
+                    <span class="icon">✏️</span> Drawing Tools
+                </h3>
+
+                <!-- Colors -->
+                <div class="tool-section">
+                    <label class="tool-label">Colors</label>
+                    <div class="color-palette">
+                        <button class="color-btn" data-color="#ef4444" style="--btn-color: #ef4444"
+                            title="Red"></button>
+                        <button class="color-btn" data-color="#22c55e" style="--btn-color: #22c55e"
+                            title="Green"></button>
+                        <button class="color-btn active" data-color="#3b82f6" style="--btn-color: #3b82f6"
+                            title="Blue"></button>
+                        <button class="color-btn" data-color="#facc15" style="--btn-color: #facc15"
+                            title="Yellow"></button>
+                        <button class="color-btn" data-color="#000000" style="--btn-color: #000000"
+                            title="Black"></button>
+                        <button class="color-btn" data-color="#ffffff" style="--btn-color: #ffffff"
+                            title="White"></button>
+                        <button class="color-btn" data-color="#ff00aa" style="--btn-color: #ff00aa"
+                            title="Pink"></button>
+                        <button class="color-btn" data-color="#f97316" style="--btn-color: #f97316"
+                            title="Orange"></button>
+                    </div>
+                </div>
+
+                <!-- Stroke Size -->
+                <div class="tool-section">
+                    <label class="tool-label">Stroke Size: <span id="stroke-value">5</span>px</label>
+                    <input type="range" id="stroke-slider" min="2" max="20" value="5" class="slider">
+                </div>
+
+                <!-- Tool Buttons -->
+                <div class="tool-section">
+                    <div class="button-row">
+                        <button class="tool-btn active" id="pen-btn" title="Pen">
+                            <span class="icon">✏️</span> Pen
+                        </button>
+                        <button class="tool-btn" id="eraser-btn" title="Eraser">
+                            <span class="icon">🧽</span> Eraser
+                        </button>
+                    </div>
+                    <div class="button-row">
+                        <button class="tool-btn" id="undo-btn" title="Undo">
+                            <span class="icon">↩️</span> Undo
+                        </button>
+                        <button class="tool-btn" id="redo-btn" title="Redo">
+                            <span class="icon">↪️</span> Redo
+                        </button>
+                    </div>
+                    <div class="button-row">
+                        <button class="tool-btn danger" id="clear-btn" title="Clear All">
+                            <span class="icon">🗑️</span> Clear
+                        </button>
+                        <button class="tool-btn save-btn" id="save-btn" title="Save Image">
+                            <span class="icon">💾</span> Save
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Shapes -->
+                <div class="tool-section">
+                    <label class="tool-label">Shapes</label>
+                    <div class="shape-palette">
+                        <button class="shape-btn" data-shape="circle" title="Circle">⭕</button>
+                        <button class="shape-btn" data-shape="rectangle" title="Rectangle">▭</button>
+                        <button class="shape-btn" data-shape="square" title="Square">⬜</button>
+                        <button class="shape-btn" data-shape="oval" title="Oval">⬭</button>
+                        <button class="shape-btn" data-shape="star" title="Star">⭐</button>
+                        <button class="shape-btn" data-shape="triangle" title="Triangle">△</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Theme Panel -->
+            <div class="panel panel-theme" id="theme-panel">
+                <h3 class="panel-title">
+                    <span class="icon">🎨</span> Background
+                </h3>
+                <div class="button-row">
+                    <button class="tool-btn active" id="light-mode-btn" title="Light Mode">
+                        <span class="icon">☀️</span> Light
+                    </button>
+                    <button class="tool-btn" id="dark-mode-btn" title="Dark Mode">
+                        <span class="icon">🌙</span> Dark
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Panel - Gesture Guide -->
+            <div class="panel panel-right" id="models-panel">
+                <!-- Gesture Guide -->
+                <div class="gesture-guide">
+                    <h4 class="guide-title">Gesture Guide</h4>
+                    <div class="gesture-item">
+                        <span class="gesture-icon">☝️</span>
+                        <span class="gesture-text"><strong>Point:</strong> Draw</span>
+                    </div>
+                    <div class="gesture-item">
+                        <span class="gesture-icon">✌️</span>
+                        <span class="gesture-text"><strong>Peace:</strong> Stop</span>
+                    </div>
+                    <div class="gesture-item">
+                        <span class="gesture-icon">🤏</span>
+                        <span class="gesture-text"><strong>Pinch:</strong> Stop</span>
+                    </div>
+                    <div class="gesture-item">
+                        <span class="gesture-icon">✊</span>
+                        <span class="gesture-text"><strong>Fist:</strong> Stop</span>
+                    </div>
+                    <div class="gesture-item">
+                        <span class="gesture-icon">🖐️</span>
+                        <span class="gesture-text"><strong>Palm:</strong> Stop</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Status Bar -->
+            <div class="status-bar" id="status-bar">
+                <div class="status-item">
+                    <div class="status-indicator" id="hand-indicator"></div>
+                    <span id="hand-status">No Hand Detected</span>
+                </div>
+                <div class="status-divider"></div>
+                <div class="status-item">
+                    <span class="gesture-label" id="gesture-status">Ready</span>
+                </div>
+                <div class="status-divider"></div>
+                <div class="status-item">
+                    <button class="mic-btn" id="mic-btn" title="Voice Commands">
+                        <span class="mic-icon">🎤</span>
+                    </button>
+                    <span id="voice-status">Voice Off</span>
+                </div>
+            </div>
+
+            <!-- Model Info Popup -->
+            <div class="info-popup" id="info-popup">
+                <h4 id="info-title">Model Info</h4>
+                <p id="info-description"></p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Main Script -->
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

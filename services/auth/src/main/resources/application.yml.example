@@ -1,0 +1,40 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: unified-campus-intelligence
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/connect_college?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: YOUR_MYSQL_PASSWORD_HERE
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+    
+  security:
+    user:
+      name: admin
+      password: YOUR_ADMIN_PASSWORD_HERE
+
+# JWT Configuration
+jwt:
+  secret: YOUR_JWT_SECRET_HERE_MIN_256_BITS
+  expiration: 86400000 # 24 hours in milliseconds
+
+# Logging
+logging:
+  level:
+    com.campus: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG

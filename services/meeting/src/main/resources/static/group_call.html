@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <title>Group Call</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        #root {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .back-btn-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Orbs (Consistent with Index) -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="back-btn-container">
+        <a href="index.html" class="glass-button">
+            <i data-lucide="arrow-left"></i>
+            Back to Dashboard
+        </a>
+    </div>
+    <div class="main-container">
+        <div id="root"></div>
+
+        <div id="chat-sidebar" class="chat-sidebar hidden" style="display: none !important;">
+            <div class="chat-header">
+                <h3>Meeting Chat</h3>
+                <button id="export-chat-btn" title="Export Chat">
+                    <i data-lucide="download"></i>
+                </button>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <!-- Messages will appear here -->
+                <div class="chat-system-message">Welcome to the chat!</div>
+            </div>
+            <div class="chat-input-area">
+                <form id="chat-form">
+                    <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+                    <button type="submit" class="send-btn">
+                        <i data-lucide="send"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meeting Ended Modal -->
+    <div id="ended-modal" class="modal-overlay hidden">
+        <div class="glass-card modal-content">
+            <h2>Meeting Ended</h2>
+            <p>You have left the meeting.</p>
+            <button onclick="window.location.href='index.html'" class="glass-button"
+                style="justify-content: center; width: auto; margin-top: 1rem;">
+                Back to Dashboard
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="js/chat.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+<script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+<script>
+    window.onload = function () {
+        function getUrlParams(url) {
+            let urlStr = url.split('?')[1];
+            if (!urlStr) return {};
+            const urlSearchParams = new URLSearchParams(urlStr);
+            const result = Object.fromEntries(urlSearchParams.entries());
+            return result;
+        }
+
+        const params = getUrlParams(window.location.href);
+        const roomID = params['roomID'] || (Math.floor(Math.random() * 10000) + "");
+        const userID = Math.floor(Math.random() * 10000) + "";
+        const userName = params['username'] || "User" + userID;
+
+        // NOTE: In a production app, Tokens should be generated on the server side to keep appID and secret secure.
+        const appID = 1836935326;
+        const serverSecret = "1c9cfa38377a2f2eee4eff73add02f52";
+        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, userID, userName);
+
+        const zp = ZegoUIKitPrebuilt.create(kitToken);
+        zp.joinRoom({
+            container: document.querySelector("#root"),
+            sharedLinks: [{
+                name: 'Join via Link',
+                url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomID=' + roomID,
+            }],
+            scenario: {
+                mode: ZegoUIKitPrebuilt.GroupCall, // Changed to GroupCall for better grid layout
+            },
+            turnOnMicrophoneWhenJoining: false, // Fix: Mic off by default
+            turnOnCameraWhenJoining: false,     // Fix: Cam off by default
+            showMyCameraToggleButton: true,
+            showMyMicrophoneToggleButton: true,
+            showAudioVideoSettingsButton: true,
+            showScreenSharingButton: true,
+            showTextChat: false, // Use our custom chat instead
+            showUserList: true,
+            maxUsers: 50,
+            layout: "Auto",
+            showLayoutButton: true,
+            onJoinRoom: () => {
+                const sidebar = document.getElementById('chat-sidebar');
+                sidebar.classList.remove('hidden');
+                sidebar.style.display = '';  // Clear the inline style
+            },
+            onLeaveRoom: () => {
+                document.getElementById('ended-modal').classList.remove('hidden');
+                document.getElementById('chat-sidebar').classList.add('hidden');
+            }
+        });
+    }
+</script>
+
+</html>

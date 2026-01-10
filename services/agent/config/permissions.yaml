@@ -1,0 +1,44 @@
+roles:
+  student:
+    allowed_collections:
+      - library
+      - notices_public
+    denied_tags:
+      - admin_only
+      - confidential
+    can_ingest: false
+    can_create_agent_tasks: false
+
+  teacher:
+    allowed_collections:
+      - library
+      - notices_public
+      - notices_internal
+    denied_tags:
+      - admin_only
+    can_ingest: true
+    can_create_agent_tasks: true
+
+  admin:
+    allowed_collections:
+      - "*"
+    denied_tags: []
+    can_ingest: true
+    can_create_agent_tasks: true
+
+  librarian:
+    allowed_collections:
+      - library
+      - notices_public
+    denied_tags:
+      - admin_only
+      - confidential
+    can_ingest: false
+    can_create_agent_tasks: false
+
+  moderator:
+    allowed_collections:
+      - "*"
+    denied_tags: []
+    can_ingest: true
+    can_create_agent_tasks: true

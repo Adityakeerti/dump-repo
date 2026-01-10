@@ -1,0 +1,142 @@
+services:
+
+  # ============ Java Services ============
+  auth:
+    build:
+      context: ../services/auth
+      dockerfile: ../../docker/Dockerfile.java
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_ADDRESS=0.0.0.0
+    depends_on:
+      - mysql
+    networks:
+      - campus-network
+
+  chat:
+    build:
+      context: ../services/chat
+      dockerfile: ../../docker/Dockerfile.java
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_ADDRESS=0.0.0.0
+      - SERVER_PORT=8083
+    depends_on:
+      - mysql
+    networks:
+      - campus-network
+
+  meeting:
+    build:
+      context: ../services/meeting
+      dockerfile: ../../docker/Dockerfile.java
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_ADDRESS=0.0.0.0
+      - SERVER_PORT=8082
+    networks:
+      - campus-network
+
+  # ============ Python Services ============
+  ocr:
+    build:
+      context: ../services/ocr
+      dockerfile: ../../docker/Dockerfile.python
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+    volumes:
+      - ocr-uploads:/app/uploads
+    depends_on:
+      - mysql
+    networks:
+      - campus-network
+
+  agent:
+    build:
+      context: ../services/agent
+      dockerfile: ../../docker/Dockerfile.python
+    ports:
+      - "8010:8010"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8010
+    depends_on:
+      - mongodb
+    networks:
+      - campus-network
+
+  library:
+    build:
+      context: ../services/library
+      dockerfile: ../../docker/Dockerfile.python
+    ports:
+      - "8002:8002"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8002
+    depends_on:
+      - mysql
+    networks:
+      - campus-network
+
+  # ============ Databases ============
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_DATABASE=connect_college
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ../database:/docker-entrypoint-initdb.d
+    networks:
+      - campus-network
+
+  mongodb:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - campus-network
+
+  # ============ Frontend Apps ============
+  web:
+    build:
+      context: ../apps/web
+      dockerfile: ../../docker/Dockerfile.react
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    networks:
+      - campus-network
+
+  landing:
+    build:
+      context: ../apps/landing
+      dockerfile: ../../docker/Dockerfile.react
+    ports:
+      - "3001:3000"
+    networks:
+      - campus-network
+
+networks:
+  campus-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  mongodb-data:
+  ocr-uploads:

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting App</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Background Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+
+        <!-- Loading View -->
+        <div id="loading-view" class="glass-card">
+            <h1>Connecting...</h1>
+            <p class="subtitle">Accessing Campus Meeting Hub</p>
+            <div class="spinner"
+                style="border: 4px solid rgba(255, 255, 255, 0.3); width: 40px; height: 40px; border-radius: 50%; border-left-color: #fff; animation: spin 1s ease infinite; margin: 2rem auto;">
+            </div>
+            <style>
+                @keyframes spin {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+            </style>
+        </div>
+
+        <!-- Hidden Login/Register structures (Removed) -->
+
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="hidden" style="width: 100%; max-width: 900px; margin: 0 auto;">
+
+            <!-- User Header -->
+            <div class="glass-header fade-in"
+                style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 3rem;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div id="user-avatar" class="avatar" style="width: 48px; height: 48px; font-size: 1.2rem;">U</div>
+                    <div>
+                        <h3 style="margin: 0; text-align: left; font-size: 1.2rem; color: white;">Welcome, <span
+                                id="current-username" style="color: var(--primary-color);">User</span></h3>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">Ready to connect</div>
+                    </div>
+                </div>
+                <button id="logout-btn" class="glass-button"
+                    style="width: auto; padding: 0.5rem 1.2rem; font-size: 0.9rem; background: rgba(255,255,255,0.05);">
+                    Logout
+                </button>
+            </div>
+
+            <!-- Main Action Cards -->
+            <div class="action-grid fade-in"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; animation-delay: 0.1s;">
+
+                <!-- Create Meeting Card -->
+                <div id="create-meeting-card" class="glass-card hover-glow"
+                    style="cursor: pointer; text-align: center; padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; border: 1px solid rgba(56, 189, 248, 0.2);">
+                    <div
+                        style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 7l-7 5 7 5V7z"></path>
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2
+                            style="margin-bottom: 0.5rem; font-size: 1.8rem; background: none; -webkit-text-fill-color: white; color: white;">
+                            New Meeting</h2>
+                        <p style="color: #94a3b8; font-size: 1rem;">Create an instant meeting and invite others</p>
+                    </div>
+                    <button class="glass-button"
+                        style="margin-top: 1rem; width: auto; padding: 0.8rem 2rem; background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.4);">Start
+                        Now &rarr;</button>
+                </div>
+
+                <!-- Join Meeting Card -->
+                <div id="join-meeting-card" class="glass-card hover-glow"
+                    style="cursor: pointer; text-align: center; padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+                    <div
+                        style="width: 80px; height: 80px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2
+                            style="margin-bottom: 0.5rem; font-size: 1.8rem; background: none; -webkit-text-fill-color: white; color: white;">
+                            Join Meeting</h2>
+                        <p style="color: #94a3b8; font-size: 1rem;">Enter a meeting code to join an existing session</p>
+                    </div>
+                    <button class="glass-button" style="margin-top: 1rem; width: auto; padding: 0.8rem 2rem;">Enter
+                        Code</button>
+                </div>
+
+            </div>
+
+            <!-- Simple Join Modal (Inline but hidden initially) -->
+            <div id="join-modal-overlay" class="modal-overlay hidden">
+                <div class="glass-card modal-content" style="max-width: 400px; padding: 3rem;">
+                    <div style="margin-bottom: 2rem;">
+                        <div
+                            style="width: 60px; height: 60px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                <polyline points="13 2 13 9 20 9"></polyline>
+                            </svg>
+                        </div>
+                        <h3 style="color: white; margin-bottom: 0.5rem;">Join Meeting</h3>
+                        <p style="color: #94a3b8;">Enter the meeting ID shared with you</p>
+                    </div>
+
+                    <input type="text" id="modal-room-id" placeholder="e.g. 1234"
+                        style="text-align: center; font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 2rem;">
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <button id="modal-cancel-btn" class="secondary" style="margin: 0;">Cancel</button>
+                        <button id="modal-join-btn" style="margin: 0;">Join</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>

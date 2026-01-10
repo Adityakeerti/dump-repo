@@ -1,0 +1,738 @@
+/* MarksheetPage Light Theme - Aligned with Main Project */
+
+:root {
+    --ms-bg1: #f9fafb;
+    --ms-bg2: #f3f4f6;
+    --ms-accent: #2563eb;
+    --ms-accent-light: #3b82f6;
+    --ms-text: #111827;
+    --ms-text-secondary: #374151;
+    --ms-muted: #6b7280;
+    --ms-border: #e5e7eb;
+    --ms-card-bg: #ffffff;
+    --ms-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --ms-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --ms-radius: 12px;
+}
+
+.marksheet-page {
+    min-height: 100vh;
+    background: var(--ms-bg1);
+    color: var(--ms-text);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.marksheet-page .nav {
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid var(--ms-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    gap: 12px;
+    z-index: 10;
+}
+
+.marksheet-page .logo {
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    flex: 1;
+    text-align: center;
+    color: var(--ms-text);
+}
+
+.marksheet-page .icon-btn {
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    padding: 8px 12px;
+    background: var(--ms-card-bg);
+    box-shadow: var(--ms-shadow);
+    cursor: pointer;
+    color: var(--ms-text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.marksheet-page .icon-btn:hover {
+    background: var(--ms-bg2);
+    transform: scale(1.02);
+    border-color: var(--ms-accent);
+}
+
+.marksheet-page .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.marksheet-page .hero {
+    position: relative;
+    padding: 36px 20px 20px;
+}
+
+.marksheet-page .hero h1 {
+    margin: 0 0 8px;
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--ms-accent) 0%, #4f46e5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.marksheet-page .hero p {
+    margin: 0;
+    color: var(--ms-muted);
+}
+
+.marksheet-page .hero .illus {
+    position: absolute;
+    right: 12px;
+    top: 0;
+    opacity: 0.08;
+    color: var(--ms-accent);
+}
+
+.marksheet-page .steps {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0 0;
+    flex-wrap: wrap;
+}
+
+.marksheet-page .step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ms-muted);
+}
+
+.marksheet-page .step .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--ms-border);
+    box-shadow: inset 0 0 0 1px var(--ms-border);
+}
+
+.marksheet-page .step.active {
+    color: var(--ms-text);
+}
+
+.marksheet-page .step.active .dot {
+    background: var(--ms-accent);
+    box-shadow: 0 0 12px rgba(58, 111, 248, 0.7);
+}
+
+.marksheet-page .step-line {
+    height: 1px;
+    flex: 1;
+    background: var(--ms-border);
+}
+
+.marksheet-page .bento {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-auto-rows: minmax(120px, auto);
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.marksheet-page .bento-a {
+    grid-column: 1 / 2;
+}
+
+.marksheet-page .bento-b {
+    grid-column: 2 / 3;
+}
+
+.marksheet-page .bento-full {
+    grid-column: 1 / -1;
+}
+
+.marksheet-page .card {
+    background: var(--ms-card-bg);
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    box-shadow: var(--ms-shadow);
+    padding: 16px;
+}
+
+.marksheet-page .card h3 {
+    margin: 0 0 10px;
+    color: var(--ms-text);
+}
+
+.marksheet-page .pill-toggle {
+    display: inline-flex;
+    background: var(--ms-bg2);
+    border-radius: 999px;
+    padding: 4px;
+    gap: 6px;
+}
+
+.marksheet-page .pill-btn {
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    background: transparent;
+    color: var(--ms-muted);
+    transition: all 0.15s ease-out;
+}
+
+.marksheet-page .pill-btn.active {
+    background: var(--ms-card-bg);
+    border-color: var(--ms-border);
+    box-shadow: var(--ms-shadow);
+    color: var(--ms-text);
+}
+
+.marksheet-page .pill-btn:hover {
+    transform: scale(1.03);
+}
+
+.marksheet-page .dropzone {
+    border: 2px dashed var(--ms-border);
+    border-radius: var(--ms-radius);
+    padding: 32px 18px;
+    background: rgba(30, 30, 30, 0.6);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.marksheet-page .dropzone:hover {
+    border-color: var(--ms-accent);
+    background: rgba(58, 111, 248, 0.1);
+}
+
+.marksheet-page .dropzone input {
+    display: none;
+}
+
+.marksheet-page .dz-label {
+    color: var(--ms-muted);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.marksheet-page .center {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.marksheet-page .primary {
+    background: var(--ms-accent);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.15s ease-out;
+}
+
+.marksheet-page .primary:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 20px rgba(58, 111, 248, 0.4);
+}
+
+.marksheet-page .primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.marksheet-page .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--ms-border);
+    border-radius: var(--ms-radius);
+    background: var(--ms-card-bg);
+}
+
+.marksheet-page table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.marksheet-page th,
+.marksheet-page td {
+    padding: 10px;
+    border-bottom: 1px solid var(--ms-border);
+    text-align: left;
+}
+
+.marksheet-page thead th {
+    background: var(--ms-bg2);
+    color: var(--ms-text);
+    font-weight: 600;
+}
+
+.marksheet-page tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.marksheet-page .edit-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--ms-border);
+    border-radius: 8px;
+    background: var(--ms-bg2);
+    color: var(--ms-text);
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.marksheet-page .edit-input:focus {
+    outline: none;
+    border-color: var(--ms-accent);
+    box-shadow: 0 0 0 2px rgba(58, 111, 248, 0.2);
+}
+
+.marksheet-page .muted-text {
+    color: var(--ms-muted);
+    font-size: 15px;
+}
+
+.marksheet-page .error-box {
+    color: #ff6b6b;
+    padding: 12px;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.marksheet-page .info-box {
+    color: var(--ms-muted);
+    font-size: 14px;
+    padding: 12px;
+    background: var(--ms-bg2);
+    border-radius: 8px;
+}
+
+.marksheet-page .info-card {
+    margin: 8px 0 12px;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    padding: 12px;
+    background: var(--ms-card-bg);
+}
+
+.marksheet-page .input-label {
+    color: var(--ms-muted);
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.marksheet-page .verify-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: var(--ms-bg2);
+    border-radius: 12px;
+    border: 1px solid var(--ms-border);
+}
+
+.marksheet-page .verify-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.marksheet-page .verify-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--ms-accent);
+}
+
+.marksheet-page .verify-label span {
+    font-size: 15px;
+    color: var(--ms-muted);
+}
+
+.marksheet-page .result-box {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    background: var(--ms-bg2);
+}
+
+.marksheet-page .guidance-list {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--ms-muted);
+}
+
+.marksheet-page .guidance-list li {
+    margin-bottom: 8px;
+}
+
+.marksheet-page .progress-container {
+    border: 1px solid var(--ms-border);
+    border-radius: 10px;
+    padding: 6px;
+    background: var(--ms-card-bg);
+}
+
+.marksheet-page .progress-track {
+    height: 16px;
+    border-radius: 6px;
+    background: var(--ms-bg2);
+    overflow: hidden;
+}
+
+.marksheet-page .progress-fill {
+    height: 100%;
+    transition: width 200ms linear, background-color 200ms linear;
+}
+
+.marksheet-page .progress-text {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--ms-muted);
+    text-align: right;
+}
+
+/* Collapsible Card */
+.marksheet-page .collapsible-card {
+    border: 1px solid var(--ms-border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--ms-card-bg);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.marksheet-page .collapsible-header {
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    cursor: pointer;
+    gap: 12px;
+    text-align: left;
+    color: var(--ms-text);
+    transition: background 0.15s ease;
+}
+
+.marksheet-page .collapsible-header:hover {
+    background: var(--ms-bg2);
+}
+
+.marksheet-page .collapsible-title {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.marksheet-page .collapsible-preview {
+    color: var(--ms-muted);
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 60px;
+}
+
+.marksheet-page .collapsible-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 6px;
+    background: var(--ms-bg2);
+    flex-shrink: 0;
+    color: var(--ms-muted);
+}
+
+.marksheet-page .collapsible-content {
+    padding: 0 16px 16px 16px;
+    border-top: 1px solid var(--ms-border);
+    padding-top: 16px;
+    animation: fadeIn 0.2s ease;
+}
+
+/* Modal/Success Animation */
+.marksheet-page .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    animation: fadeInBackdrop 0.3s ease-out;
+}
+
+.marksheet-page .modal {
+    width: 100%;
+    max-width: 720px;
+    background: var(--ms-card-bg);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    padding: 16px;
+}
+
+.marksheet-page .success-modal {
+    max-width: 420px;
+    padding: 48px 32px;
+    text-align: center;
+    animation: slideUp 0.4s ease-out;
+}
+
+.marksheet-page .success-icon {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #22C55E;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 32px;
+    animation: scaleIn 0.6s ease-out;
+    box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+}
+
+.marksheet-page .success-modal h2 {
+    margin: 0 0 12px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.marksheet-page .success-modal p {
+    color: var(--ms-muted);
+    margin: 0 0 40px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.marksheet-page .powered-by {
+    font-size: 13px;
+    color: #666;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--ms-border);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Login Page */
+.marksheet-page .login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.marksheet-page .login-card {
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
+    padding: 32px 24px;
+    box-sizing: border-box;
+}
+
+.marksheet-page .login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.marksheet-page .login-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--ms-accent) 0%, #764ba2 100%);
+    display: grid;
+    place-items: center;
+    margin: 0 auto 16px;
+}
+
+.marksheet-page .login-header h2 {
+    margin: 0 0 8px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.marksheet-page .login-form {
+    display: grid;
+    gap: 16px;
+}
+
+.marksheet-page .form-group {
+    display: grid;
+    gap: 8px;
+}
+
+.marksheet-page .form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ms-muted);
+}
+
+.marksheet-page .login-btn {
+    margin-top: 8px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInBackdrop {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+    .marksheet-page .nav {
+        padding: 10px 14px;
+    }
+
+    .marksheet-page .logo {
+        font-size: 15px;
+    }
+
+    .marksheet-page .container {
+        padding: 16px;
+    }
+
+    .marksheet-page .hero {
+        padding: 24px 8px 12px;
+    }
+
+    .marksheet-page .hero h1 {
+        font-size: 22px;
+    }
+
+    .marksheet-page .hero p {
+        font-size: 13px;
+    }
+
+    .marksheet-page .hero .illus {
+        display: none;
+    }
+
+    .marksheet-page .steps {
+        gap: 8px;
+    }
+
+    .marksheet-page .step span {
+        font-size: 12px;
+    }
+
+    .marksheet-page .bento {
+        grid-template-columns: 1fr;
+    }
+
+    .marksheet-page .bento-a,
+    .marksheet-page .bento-b,
+    .marksheet-page .bento-full {
+        grid-column: auto;
+    }
+
+    .marksheet-page .card {
+        padding: 12px;
+    }
+
+    .marksheet-page .pill-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .marksheet-page .dropzone {
+        padding: 20px 14px;
+    }
+
+    .marksheet-page .dz-label {
+        font-size: 13px;
+    }
+
+    .marksheet-page .center {
+        padding: 4px 0 8px;
+    }
+
+    .marksheet-page .primary {
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 15px;
+    }
+
+    .marksheet-page table {
+        font-size: 13px;
+    }
+
+    .marksheet-page th,
+    .marksheet-page td {
+        padding: 8px;
+    }
+}

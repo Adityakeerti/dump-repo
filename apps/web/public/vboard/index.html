@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VBoard - Redirecting...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e1b4b 0%, #581c87 50%, #1e1b4b 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 500px;
+        }
+
+        .icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            color: #c4b5fd;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .countdown {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #a78bfa;
+            margin: 1.5rem 0;
+            animation: bounce 0.5s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #7c3aed;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #6d28d9;
+            transform: scale(1.05);
+        }
+
+        .warning {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        .back {
+            display: block;
+            margin-top: 1rem;
+            color: #9ca3af;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="icon">🎨</div>
+        <h1>V-Board</h1>
+        <p>Gesture-Controlled Virtual Whiteboard</p>
+        <p>Camera requires HTTPS. Redirecting to secure server...</p>
+
+        <div class="countdown" id="countdown">3</div>
+
+        <button class="btn" onclick="redirect()">Open VBoard Now →</button>
+
+        <p class="warning">⚠️ Accept the security warning for the self-signed certificate</p>
+
+        <a href="javascript:history.back()" class="back">← Go Back</a>
+    </div>
+
+    <script>
+        const vboardUrl = 'https://' + window.location.hostname + ':9444/';
+        let count = 3;
+
+        function redirect() {
+            window.location.href = vboardUrl;
+        }
+
+        const timer = setInterval(() => {
+            count--;
+            document.getElementById('countdown').textContent = count;
+            if (count <= 0) {
+                clearInterval(timer);
+                redirect();
+            }
+        }, 1000);
+    </script>
+</body>
+
+</html>

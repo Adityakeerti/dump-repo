@@ -1,0 +1,43 @@
+{
+    "solar": {
+        "name": "Solar System",
+        "description": "Our solar system consists of the Sun and all celestial objects bound to it by gravity. The Sun contains 99.8% of the total mass of the solar system.",
+        "parts": {
+            "sun": "The Sun is a G-type main-sequence star at the center of our solar system. It is about 4.6 billion years old and provides energy through nuclear fusion, converting hydrogen to helium.",
+            "mercury": "Mercury is the smallest planet and closest to the Sun. It has no atmosphere and extreme temperature variations between day and night.",
+            "earth": "Earth is the third planet from the Sun and the only known planet to support life. It has a protective atmosphere and liquid water on its surface.",
+            "moon": "The Moon is Earth's only natural satellite. It is about 384,400 kilometers away and affects Earth's tides through gravitational pull.",
+            "saturn": "Saturn is the sixth planet from the Sun and is famous for its beautiful ring system made of ice and rock particles."
+        }
+    },
+    "heart": {
+        "name": "Human Heart",
+        "description": "The heart is a muscular organ that pumps blood through the circulatory system. It beats approximately 100,000 times per day, pumping about 5 liters of blood per minute.",
+        "parts": {
+            "heart": "The heart has four chambers: two atria and two ventricles. The right side pumps blood to the lungs, while the left side pumps oxygenated blood to the body.",
+            "aorta": "The aorta is the largest artery in the body. It carries oxygenated blood from the left ventricle to the rest of the body's organs and tissues.",
+            "pulmonary": "The pulmonary artery carries deoxygenated blood from the right ventricle to the lungs where it receives oxygen and releases carbon dioxide.",
+            "venaCava": "The vena cava is the largest vein in the body. The superior vena cava brings blood from the upper body, while the inferior vena cava brings blood from the lower body."
+        }
+    },
+    "eye": {
+        "name": "Human Eye",
+        "description": "The eye is a sensory organ that detects light and converts it to electrical neural signals. It can distinguish approximately 10 million different colors.",
+        "parts": {
+            "sclera": "The sclera is the white, protective outer layer of the eye. It maintains the shape of the eyeball and provides attachment for eye muscles.",
+            "cornea": "The cornea is the transparent front part of the eye that covers the iris and pupil. It provides about 65-75% of the eye's focusing power.",
+            "iris": "The iris is the colored part of the eye that controls the amount of light entering the pupil. It contains muscles that adjust pupil size.",
+            "pupil": "The pupil is the opening in the center of the iris that allows light to enter the eye. It appears black because light entering it is absorbed by the retina."
+        }
+    },
+    "reflection": {
+        "name": "Light Reflection",
+        "description": "Light reflection occurs when light bounces off a surface. According to the law of reflection, the angle of incidence equals the angle of reflection.",
+        "parts": {
+            "mirror": "A mirror is a smooth surface that reflects light regularly. Plane mirrors produce virtual, upright images that appear to be behind the mirror.",
+            "incident": "The incident ray is the incoming light beam that travels toward the reflective surface. It makes an angle with the normal called the angle of incidence.",
+            "reflected": "The reflected ray is the light beam that bounces off the surface. It makes an angle with the normal equal to the angle of incidence.",
+            "normal": "The normal is an imaginary line perpendicular to the reflective surface at the point where the light ray hits. It is used as a reference for measuring angles."
+        }
+    }
+}
