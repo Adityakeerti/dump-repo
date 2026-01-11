@@ -43,6 +43,24 @@ CREATE TABLE student_profiles (
     INDEX idx_batch_year (batch_year)
 ) ENGINE=InnoDB;
 
+-- User Sessions (Persistent Login)
+CREATE TABLE user_sessions (
+    session_id VARCHAR(64) PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    context_type VARCHAR(20) NOT NULL,
+    token VARCHAR(512) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP NOT NULL,
+    last_accessed TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ip_address VARCHAR(45),
+    user_agent VARCHAR(255),
+    is_active BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    INDEX idx_user_id (user_id),
+    INDEX idx_expires_at (expires_at),
+    INDEX idx_is_active (is_active)
+) ENGINE=InnoDB;
+
 -- =====================================================
 -- 2. SMART LIBRARY MODULE (Based on pustak_tracker.db)
 -- =====================================================
@@ -455,6 +473,44 @@ CREATE TABLE book_recommendations (
     FOREIGN KEY (book_id) REFERENCES books(book_id),
     INDEX idx_user_id (user_id),
     INDEX idx_score (score DESC)
+) ENGINE=InnoDB;
+
+-- =====================================================
+-- 10. AI CHAT & AGENT MODULE
+-- =====================================================
+
+-- Chat Messages (auto-expires after 7 days via application)
+CREATE TABLE IF NOT EXISTS ai_chat_messages (
+    message_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(100) NOT NULL,
+    role ENUM('user', 'chatbot', 'agent') NOT NULL,
+    content TEXT NOT NULL,
+    metadata JSON,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_user_created (user_id, created_at),
+    INDEX idx_created (created_at)
+) ENGINE=InnoDB;
+
+-- Agent Tasks
+CREATE TABLE IF NOT EXISTS ai_agent_tasks (
+    task_id VARCHAR(100) PRIMARY KEY,
+    user_id VARCHAR(100) NOT NULL,
+    task_type VARCHAR(50),
+    description TEXT,
+    status ENUM('PENDING', 'IN_PROGRESS', 'COMPLETED', 'FAILED') DEFAULT 'PENDING',
+    result JSON,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_status (status),
+    INDEX idx_user (user_id)
+) ENGINE=InnoDB;
+
+-- User AI Profiles (preferences, context)
+CREATE TABLE IF NOT EXISTS ai_user_profiles (
+    user_id VARCHAR(100) PRIMARY KEY,
+    preferences JSON,
+    context JSON,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 -- =====================================================
